@@ -66,6 +66,27 @@
       context.arc(curr_p.x, curr_p.y, p_radius, 0, tau);
       context.fill();
     }
+
+    // Loop through all the particles, and draw lines to the ones that are somewhat close.
+    for (var i = 0; i < n; i++) {
+      for(var j = i+1; j < n; j++) {
+        var p1 = particles[i],
+            p2 = particles[j];
+
+        var dx = p1.x - p2.x,
+            dy = p1.y - p2.y;
+        var euclid_dist = Math.sqrt(dx*dx + dy*dy);
+
+        if (euclid_dist < max_dist) {
+          context.globalAlpha = euclid_dist > min_dist ? (max_dist - euclid_dist) / (max_dist - min_dist) : 1;
+          context.beginPath();
+          context.moveTo(p1.x, p1.y);
+          context.lineTo(p2.x, p2.y);
+          context.stroke();
+        }
+      }
+    }
   });
+
 </script>
 </html>
