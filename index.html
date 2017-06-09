@@ -14,6 +14,11 @@
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   var canvas = document.querySelector("canvas");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -31,8 +36,8 @@
   var particles = new Array(n);
   for (var i = 0; i < n; i++) {
     particles[i] = {
-      x: Math.random() * width,
-      y0: Math.random() * height,
+      x: getRandomInt(0, width),
+      y0: getRandomInt(0, height),
       v: (Math.random() - 0.5) * max_speed
     };
   }
