@@ -18,13 +18,41 @@
   var canvas = document.querySelector("canvas"),
       context = canvas.getContext("2d"),
       width = canvas.width,
-      height = canvas.height;
+      height = canvas.height,
+      p_radius = 2,
+      max_speed = 0.01;
 
   var tau = 2 * Math.PI;
   var n = 100;
 
-  context.beginPath();
-  var particle = context.arc(15, 15, 12, 0, 6.28);
-  context.fill();
+  var particles = new Array(n);
+  for (var i = 0; i < n; i++) {
+    particles[i] = {
+      x: Math.random() * width,
+      y0: Math.random() * height,
+      v: (Math.random() - 0.5) * 0.1
+    };
+  }
+
+  var t = d3.timer(function(elapsed) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < n; i++) {
+      var curr_p = particles[i];
+      context.beginPath();
+
+      // Make the particles wrap-around if they go out of bounds.
+      curr_p.y = curr_p.y0 + elapsed * curr_p.v;
+      if (curr_p.y > height + 10) {
+        curr_p.y0 -= (height + 5);
+      } else if (curr_p.y < -10) {
+        curr_p.y0 += (height - 5);
+      }
+
+      context.arc(curr_p.x, curr_p.y, p_radius, 0, tau);
+      context.fill();
+    }
+  });
+
+
 </script>
 </html>
