@@ -23,32 +23,36 @@
       width = canvas.width,
       height = canvas.height,
       p_radius = 2,
-      max_speed = 0.01;
+      max_outer_bounds = 5;
+      max_speed = 0.15;
 
   var tau = 2 * Math.PI;
-  var n = 100;
+  var n = 150;
 
   var particles = new Array(n);
   for (var i = 0; i < n; i++) {
     particles[i] = {
       x: Math.random() * width,
       y0: Math.random() * height,
-      v: (Math.random() - 0.5) * 0.1
+      v: (Math.random() - 0.5) * max_speed
     };
   }
 
   var t = d3.timer(function(elapsed) {
+    // Clear the canvas.
     context.clearRect(0, 0, canvas.width, canvas.height);
+
     for (var i = 0; i < n; i++) {
       var curr_p = particles[i];
       context.beginPath();
 
-      // Make the particles wrap-around if they go out of bounds.
       curr_p.y = curr_p.y0 + elapsed * curr_p.v;
-      if (curr_p.y > height + 10) {
-        curr_p.y0 -= (height + 5);
-      } else if (curr_p.y < -10) {
-        curr_p.y0 += (height - 5);
+
+      // Make the particles wrap-around if they go out of bounds.
+      if (curr_p.y > height + max_outer_bounds) {
+        curr_p.y0 -= (height + max_outer_bounds);
+      } else if (curr_p.y < -max_outer_bounds) {
+        curr_p.y0 += (height - max_outer_bounds);
       }
 
       context.arc(curr_p.x, curr_p.y, p_radius, 0, tau);
