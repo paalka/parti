@@ -15,8 +15,11 @@
 
 <script>
 
-  var canvas = document.querySelector("canvas"),
-      context = canvas.getContext("2d"),
+  var canvas = document.querySelector("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var context = canvas.getContext("2d"),
       width = canvas.width,
       height = canvas.height,
       p_radius = 2,
