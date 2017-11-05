@@ -43,7 +43,7 @@ var t = d3.timer(function(elapsed) {
     if (curr_p.y > height + max_outer_bounds) {
       curr_p.y0 -= (height + max_outer_bounds);
     } else if (curr_p.y < -max_outer_bounds) {
-      curr_p.y0 += (height - max_outer_bounds);
+      curr_p.y0 += (height + max_outer_bounds);
     }
 
     context.arc(curr_p.x, curr_p.y, p_radius, 0, tau);
